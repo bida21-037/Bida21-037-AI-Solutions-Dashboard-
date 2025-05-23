@@ -107,7 +107,7 @@ with st.sidebar:
     # Centered image using columns
     col_img1, col_img2, col_img3 = st.columns([1, 2, 1])
     with col_img2:
-        st.image("C:/Users/bida21-037/Documents/Product_dev/user.png", width=140)
+        st.image("user.png", width=140)
 
     # Centered name and email using HTML
     st.markdown(
