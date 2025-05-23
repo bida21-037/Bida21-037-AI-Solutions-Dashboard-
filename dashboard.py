@@ -24,8 +24,10 @@ from sklearn.metrics import (
     accuracy_score
 )
 import os
+import gzip
 # --------------------- Page Config ---------------------
 st.set_page_config(page_title="Executive Dashboard", layout="wide")
+
 st.markdown("""
     <style>
         /* Reduce top and bottom padding of the main container */
@@ -86,8 +88,8 @@ if not st.session_state.logged_in:
     st.stop()  # Prevent app from loading until logged in
 
 # Load both datasets
-df_2024 = pd.read_csv("Clean_WebServerLogs_Enriched_2024.csv", parse_dates=["timestamp"])
-df_2025 = pd.read_csv("Clean_WebServerLogs_Enriched_2025.csv", parse_dates=["timestamp"])
+df_2024 = pd.read_csv("Clean_WebServerLogs_Enriched (2024)_compressed.csv.gz", compression='gzip', parse_dates=["timestamp"])
+df_2025 = pd.read_csv("Clean_WebServerLogs_Enriched (2025)_compressed.csv.gz", compression='gzip', parse_dates=["timestamp"])
 
 # Explicitly convert timestamp column
 df_2024["timestamp"] = pd.to_datetime(df_2024["timestamp"], errors='coerce')
@@ -994,6 +996,7 @@ elif selected == "Sales Representative":
 # ------------------------------------------
 elif selected == "Manager View":
     st.title("👔 Manager Dashboard")
+    st.markdown('<style>div.block-container{padding-top:0rem !important;padding-bottom: 1rem;} header, footer {visibility: hidden;} </style>', unsafe_allow_html=True)
     st.markdown("<div style='margin-top:10px; margin-bottom:10px'></div>", unsafe_allow_html=True)
     
     
