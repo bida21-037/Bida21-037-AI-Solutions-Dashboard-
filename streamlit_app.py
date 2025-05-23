@@ -25,6 +25,7 @@ from sklearn.metrics import (
 )
 import os
 import gzip
+import gdown
 # --------------------- Page Config ---------------------
 st.set_page_config(page_title="Executive Dashboard", layout="wide")
 
@@ -1876,8 +1877,20 @@ elif selected == "AI Model":
     st.write("Use the trained logistic regression model to predict whether a user interaction will convert into a sale.")
     prediction_mode = st.radio("Choose Prediction Mode:", ["Single Prediction", "Batch Prediction (Upload CSV)"], horizontal=True)
     st.markdown("---")
-    model = joblib.load("logistic_model_pipeline.pkl")
+    # Define path to local model file
+    model_file = "logistic_model_pipeline.pkl"
 
+    # Google Drive file ID extracted from the shared link
+    file_id = "1JSPQVxOubu77KbYC4T-4Kq538soJf-Ar"
+    gdrive_url = f"https://drive.google.com/uc?id={file_id}"
+
+    # Download the model file only if it doesn't exist locally
+    if not os.path.exists(model_file):
+        with st.spinner("📥 Downloading AI model from Google Drive..."):
+            gdown.download(gdrive_url, model_file, quiet=False)
+
+    # Load the model
+    model = joblib.load(model_file)
     if prediction_mode == "Single Prediction":
         st.markdown("## Input Features (Single)")
 
